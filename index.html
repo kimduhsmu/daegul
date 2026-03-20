@@ -394,6 +394,8 @@
         .filter(r => r.c && r.c[0] && r.c[0].v)
         .map((r, i) => {
           const 셀 = idx => (r.c[idx] && r.c[idx].v != null) ? String(r.c[idx].v).trim() : '';
+          // F열(5): 드라이브 공유링크, G열(6): 변환된 이미지링크 - 둘 다 지원
+          const 사진링크 = 셀(6) || 셀(5);
           return {
             번호: i + 1,
             날짜: 셀(0),
@@ -401,7 +403,7 @@
             장소: 셀(2),
             참석자: 셀(3) ? 셀(3).split(',').map(s => s.trim()).filter(Boolean) : [],
             내용: 셀(4),
-            사진: 셀(5) ? 셀(5).split(',').map(s => s.trim()).filter(Boolean) : [],
+            사진: 사진링크 ? 사진링크.split(',').map(s => s.trim()).filter(Boolean) : [],
             아이콘: 아이콘목록[i % 아이콘목록.length]
           };
         });
